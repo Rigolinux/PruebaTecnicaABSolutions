@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Syncfusion.Blazor.Core" Version="25.1.39" />
+    <PackageReference Include="Syncfusion.Blazor.Grid" Version="25.1.39" />
+    <PackageReference Include="Syncfusion.Blazor.ProgressBar" Version="25.1.39" />
+    <PackageReference Include="Syncfusion.Blazor.Themes" Version="25.1.39" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Scripts\" />
+  </ItemGroup>
+
+</Project>
