@@ -6,7 +6,10 @@
 <!DOCTYPE html>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/PruebaTecnicaABSolutions.styles.css" asp-append-version="true" />
+
+<link rel="stylesheet" href="https://cdn.syncfusion.com/ej2/25.1.35/material.css" />
+
+<script src="https://cdn.syncfusion.com/ej2/25.1.35/dist/ej2.min.js"></script>
 
 <html>
 <head>
@@ -16,8 +19,8 @@
 <body>
       <form asp-controller="Access" asp-action="Login" method="post">
             <h1>Login</h1>
-            <input type="email" placeholder="Email" asp-for="Email"/>
-            <input type="password" placeholder="PassWord" asp-for="Password"/>
+        <ejs-textbox type="email" placeholder="Email" id="Email" value="Email"></ejs-textbox>
+        <ejs-textbox type="password" placeholder="Contraseña" value="Password" id="Password"> </ejs-textbox>
 
             <label>
             <input type="checkbox" asp-for="KeepLogin" />
@@ -33,6 +36,14 @@
             }
     </form>
 
-    
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="_framework/blazor.server.js"></script>
+
+
+
+    <script src="~/js/site.js" asp-append-version="true"></script>
+  
+    <ejs-scripts></ejs-scripts>
 </body>
 </html>
