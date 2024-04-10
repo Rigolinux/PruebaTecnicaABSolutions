@@ -12,6 +12,7 @@ namespace PruebaTecnicaABSolutions.Controllers
     {
         private readonly IEncriptService encriptService;
         private readonly IUserServices userServices;
+        
 
         public AccessController(IEncriptService encriptService, IUserServices userServices
             
@@ -41,7 +42,7 @@ namespace PruebaTecnicaABSolutions.Controllers
                 {
                     bool isValid = this.encriptService.ValidatePassword(login.Password, user.Password);
                     
-                    if(isValid)
+                    if(isValid )
                     {
                         List<Claim> claims = new List<Claim>()
                         {
@@ -82,6 +83,8 @@ namespace PruebaTecnicaABSolutions.Controllers
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Login", "Access");
         }
+
+        
 
     }
 }

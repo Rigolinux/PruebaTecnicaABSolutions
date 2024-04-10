@@ -12,7 +12,7 @@ namespace PruebaTecnicaABSolutions.Models
         }
 
         public int BusinessId { get; set; }
-        public string? BusinessName { get; set; }
+        public string BusinessName { get; set; }
         public string? Description { get; set; }
         public DateTime? CreationDate { get; set; }
         public string? Address { get; set; }

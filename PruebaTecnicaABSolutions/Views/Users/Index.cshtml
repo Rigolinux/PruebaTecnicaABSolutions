@@ -11,15 +11,16 @@
         <div class="text-center">
             <h1 class="display-4">Welcome</h1>
             <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-             user
+          
    
-    }
+    
     <div>
-        <a class="btn btn-primary" asp-action="Create">Agregar Usuario</a>
+        <a class="btn btn-primary" asp-action="Create" >Agregar Usuario</a>
         
     </div>
     
-    <ejs-grid id="Grid" dataSource="@Model" gridLines="None">
+    <ejs-grid id="Grid" dataSource="@Model" allowFiltering="true" gridLines="None" allowSearching="true">
+      
         <e-grid-columns>
             <e-grid-column headerText="Id" field="UserId"></e-grid-column>
             <e-grid-column headerText="Nombre" field="FirstName"> </e-grid-column>
@@ -27,13 +28,25 @@
             <e-grid-column headerText="Correo" field="Email"></e-grid-column>
             <e-grid-column headerText="Rol" field="UserType"></e-grid-column>
             <e-grid-column headerText="Negocio" field="Business"></e-grid-column>
-            <e-grid-column headerText="Acciones" ></e-grid-column>
-
-           
+            <e-grid-column headerText="Acciones" template="#actionColTemplate" ></e-grid-column> 
         </e-grid-columns>
+          
     </ejs-grid>
 
         </div>
+        
+
+    <script id="actionColTemplate" type="text/x-template">
+        <div class="d-flex flex-row justify-content-start">
+            <a class="btn btn-sm btn-green" href="/Users/Edit/${UserId}">
+                <i class="fa-solid fa-pen fa-lg"></i>
+            </a>
+            <a class="btn btn-danger ml-2" href="/Users/Delete/${UserId}">
+               <i class="fa-solid fa-trash fa-lg"></i>
+            </a>
+        </div>
+</script>
+
 
 
 

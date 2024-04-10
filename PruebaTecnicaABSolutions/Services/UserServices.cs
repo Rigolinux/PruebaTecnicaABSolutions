@@ -4,6 +4,8 @@ using PruebaTecnicaABSolutions.Models;
 using System.Configuration;
 using PruebaTecnicaABSolutions.Services;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
+
 
 
 namespace PruebaTecnicaABSolutions.Services
@@ -11,8 +13,11 @@ namespace PruebaTecnicaABSolutions.Services
     public interface IUserServices
     {
         Task CreateUser(UserViewCreation user);
-        Task<User> FindUser(string mail);
+        Task<User?> FindUser(string mail);
+        Task<IEnumerable<UserTypesViewList>> GetALlListUserTypes();
         Task<IEnumerable<UserViewModel>> GetAllUsers();
+        Task<IEnumerable<UserViewModel>> GetAllUsers(int businessId);
+        Task<IEnumerable<UserTypesViewList>> GetListUserTypes();
         Task<IEnumerable<BusinessViewList>> GetViewBusinesList();
     }
    
@@ -32,16 +37,50 @@ namespace PruebaTecnicaABSolutions.Services
             using (ABPruebaTecnicaContext db = new ABPruebaTecnicaContext())
             {
                 return await db.Users
-                    .Select(e => new UserViewModel
-                    {
-                        FirstName = e.FirstName,
-                        LastName = e.LastName,
-                        Email = e.Email,
-                        Business = e.Business,
-                        BusinessId = e.BusinessId,
-                        UserId = e.UserId,
-                        UserType = e.UserType
-                    })
+                    .Join(db.Businesses,
+                            user => user.BusinessId,
+                            business => business.BusinessId,
+                            (user, business) => new { User = user, Business = business })
+                    .Join(db.UserTypes,
+                            joined => joined.User.UserTypeId,
+                            userType => userType.UserTypeId,
+                            (joined, userType) => new UserViewModel
+                            {
+                                FirstName = joined.User.FirstName,
+                                LastName = joined.User.LastName,
+                                Email = joined.User.Email,
+                                Business = joined.Business.BusinessName,
+                                BusinessId = joined.User.BusinessId,
+                                UserId = joined.User.UserId,
+                                UserType =userType.TypeName
+                            })
+                    .ToListAsync();
+            }
+        }
+        public async Task<IEnumerable<UserViewModel>> GetAllUsers(int businessId)
+        {
+            using (ABPruebaTecnicaContext db = new ABPruebaTecnicaContext())
+            {
+                return await db.Users
+                    .Join(db.Businesses,
+                            user => user.BusinessId,
+                            business => business.BusinessId,
+                            (user, business) => new { User = user, Business = business })
+                    .Join(db.UserTypes,
+                            joined => joined.User.UserTypeId,
+                            userType => userType.UserTypeId,
+                            (joined, userType) => new UserViewModel
+                            {
+                                FirstName = joined.User.FirstName,
+                                LastName = joined.User.LastName,
+                                Email = joined.User.Email,
+                                Business = joined.Business.BusinessName,
+                                BusinessId = joined.User.BusinessId,
+                                UserId = joined.User.UserId,
+                                UserType = userType.TypeName
+                            })
+                    .Where(e => e.BusinessId == businessId
+                    )
                     .ToListAsync();
             }
         }
@@ -80,12 +119,43 @@ namespace PruebaTecnicaABSolutions.Services
             }
         }
 
-        public async Task<User> FindUser(string mail)
+        public async Task<User?> FindUser(string mail)
         {
             using (ABPruebaTecnicaContext db = new ABPruebaTecnicaContext())
             {
                 return await db.Users.FirstOrDefaultAsync(u => u.Email == mail);
             }
         }
+
+        public async Task<IEnumerable<UserTypesViewList>> GetALlListUserTypes()
+        {
+            
+            using (ABPruebaTecnicaContext db = new ABPruebaTecnicaContext())
+            {
+                return await db.UserTypes.Select(e => new UserTypesViewList
+                {
+                    UserTypeId = e.UserTypeId,
+                    TypeName = e.TypeName
+                })
+                  .ToListAsync();
+            }
+            
+        }
+        public async Task<IEnumerable<UserTypesViewList>> GetListUserTypes()
+        {
+
+            using (ABPruebaTecnicaContext db = new ABPruebaTecnicaContext())
+            {
+                return await db.UserTypes.Select(e => new UserTypesViewList
+                {
+                    UserTypeId = e.UserTypeId,
+                    TypeName = e.TypeName
+                })
+                  .Where(e => e.UserTypeId != 1)
+                  .ToListAsync();
+            }
+
+        }
+
     }
 }

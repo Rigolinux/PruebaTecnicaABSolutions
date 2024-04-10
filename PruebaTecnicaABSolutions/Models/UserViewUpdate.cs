@@ -1,6 +1,6 @@
 ﻿namespace PruebaTecnicaABSolutions.Models
 {
-    public class UserViewCreation
+    public class UserViewUpdate
     {
         public string FirstName { get; set; }
         public string? LastName { get; set; }
@@ -11,8 +11,6 @@
         public string Password { get; set; }
 
         public IEnumerable<BusinessViewList>? businessViews { get; set; }
-        
-        public IEnumerable<UserTypesViewList>? userTypes { get; set; }
     }
 }
 

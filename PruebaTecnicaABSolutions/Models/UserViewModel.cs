@@ -10,8 +10,8 @@
         public string? Email { get; set; }
 
 
-        public virtual Business? Business { get; set; }
-        public virtual UserType? UserType { get; set; }
+        public string Business { get; set; }
+        public string UserType { get; set; }
 
     }
 }
