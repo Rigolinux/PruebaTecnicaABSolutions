@@ -1,7 +1,10 @@
 using Syncfusion.Blazor;
+using PruebaTecnicaABSolutions.Services;
 
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddTransient<IUserServices,UserServices>();
 
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();

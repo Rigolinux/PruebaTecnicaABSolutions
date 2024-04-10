@@ -1,0 +1,35 @@
+﻿@using Syncfusion.Blazor
+
+
+@model List<UserViewModel>
+@{
+    ViewData["Title"] = "Users Page";
+   
+}
+
+    
+        <div class="text-center">
+            <h1 class="display-4">Welcome</h1>
+            <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+             user
+   
+    }
+    <ejs-grid id="Grid" dataSource="@Model" gridLines="None">
+        <e-grid-columns>
+            <e-grid-column headerText="Id" field="UserId"></e-grid-column>
+            <e-grid-column headerText="Nombre" field="FirstName"> </e-grid-column>
+            <e-grid-column headerText="Apellido" field="LastName"></e-grid-column>
+            <e-grid-column headerText="Correo" field="Email"></e-grid-column>
+            <e-grid-column headerText="Rol" field="UserType"></e-grid-column>
+            <e-grid-column headerText="Negocio" field="Business"></e-grid-column>
+            <e-grid-column headerText="Acciones" ></e-grid-column>
+
+           
+        </e-grid-columns>
+    </ejs-grid>
+
+        </div>
+
+
+
+

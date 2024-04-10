@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <PackageReference Include="EntityFramework" Version="6.4.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.29" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.29" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.29">
       <PrivateAssets>all</PrivateAssets>
@@ -18,10 +19,7 @@
     <PackageReference Include="Syncfusion.Blazor.Grid" Version="25.1.39" />
     <PackageReference Include="Syncfusion.Blazor.ProgressBar" Version="25.1.39" />
     <PackageReference Include="Syncfusion.Blazor.Themes" Version="25.1.39" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Scripts\" />
+    <PackageReference Include="Syncfusion.EJ2.AspNet.Core" Version="25.1.39" />
   </ItemGroup>
 
 </Project>
