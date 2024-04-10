@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using PruebaTecnicaABSolutions.Models;
 using System.Configuration;
-
+using PruebaTecnicaABSolutions.Services;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -10,6 +10,8 @@ namespace PruebaTecnicaABSolutions.Services
 {
     public interface IUserServices
     {
+        Task CreateUser(UserViewCreation user);
+        Task<User> FindUser(string mail);
         Task<IEnumerable<UserViewModel>> GetAllUsers();
         Task<IEnumerable<BusinessViewList>> GetViewBusinesList();
     }
@@ -18,6 +20,12 @@ namespace PruebaTecnicaABSolutions.Services
 
     public class UserServices : IUserServices
     {
+        private readonly IEncriptService encriptService;
+
+        public UserServices(IEncriptService encriptService)
+        {
+            this.encriptService = encriptService;
+        }
 
         public async Task<IEnumerable<UserViewModel>> GetAllUsers()
         {
@@ -53,6 +61,31 @@ namespace PruebaTecnicaABSolutions.Services
 
         }
         
-        
+        public async Task CreateUser(UserViewCreation user)
+        {
+            using (ABPruebaTecnicaContext db = new ABPruebaTecnicaContext())
+            {
+                
+                User newUser = new User()
+                {
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    Email = user.Email,
+                    Password = encriptService.Encrypt(user.Password),
+                    BusinessId = user.BusinessId,
+                    UserTypeId = user.UserType
+                };
+                db.Users.Add(newUser);
+                await db.SaveChangesAsync();
+            }
+        }
+
+        public async Task<User> FindUser(string mail)
+        {
+            using (ABPruebaTecnicaContext db = new ABPruebaTecnicaContext())
+            {
+                return await db.Users.FirstOrDefaultAsync(u => u.Email == mail);
+            }
+        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PruebaTecnicaABSolutions.Models;
 using PruebaTecnicaABSolutions.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace PruebaTecnicaABSolutions.Controllers
 {
@@ -8,12 +9,17 @@ namespace PruebaTecnicaABSolutions.Controllers
     {
         private readonly IUserServices userServices;
 
+
         public UsersController(IUserServices userServices)
         {
             this.userServices = userServices;
         }
+
+        [Authorize(Roles ="1")]
         public async Task<IActionResult> Index()
         {
+            var claim = HttpContext.User.Claims.FirstOrDefault();
+            var cookieValue = claim?.Value;// aqui esta el correo
             var users = await userServices.GetAllUsers();
             return View(users);
         }
@@ -26,11 +32,12 @@ namespace PruebaTecnicaABSolutions.Controllers
         }
 
         [HttpPost]
-        public  IActionResult Create(UserViewCreation userViewCreation)
+        public async Task<IActionResult> Create(UserViewCreation userViewCreation)
         {
             if (ModelState.IsValid)
             {
-                return RedirectToAction("Index");
+                userViewCreation.UserType = 1;
+                await userServices.CreateUser(userViewCreation);
 
             }
             return RedirectToAction("Index");

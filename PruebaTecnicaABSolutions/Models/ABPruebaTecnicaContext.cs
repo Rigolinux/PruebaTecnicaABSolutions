@@ -28,6 +28,7 @@ namespace PruebaTecnicaABSolutions.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
+
                 optionsBuilder.UseSqlServer("Server=.\\RIGO;Database=ABPruebaTecnica;encrypt=True;Trusted_Connection=True;TrustServerCertificate=True;");
             }
         }
@@ -86,6 +87,9 @@ namespace PruebaTecnicaABSolutions.Models
 
             modelBuilder.Entity<User>(entity =>
             {
+                entity.HasIndex(e => e.Email, "UC_Email")
+                    .IsUnique();
+
                 entity.Property(e => e.Email).HasMaxLength(255);
 
                 entity.Property(e => e.FirstName).HasMaxLength(50);
