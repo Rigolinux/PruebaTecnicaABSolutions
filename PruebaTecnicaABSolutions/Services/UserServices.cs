@@ -11,6 +11,7 @@ namespace PruebaTecnicaABSolutions.Services
     public interface IUserServices
     {
         Task<IEnumerable<UserViewModel>> GetAllUsers();
+        Task<IEnumerable<BusinessViewList>> GetViewBusinesList();
     }
    
 
@@ -37,6 +38,21 @@ namespace PruebaTecnicaABSolutions.Services
             }
         }
 
+        public async Task<IEnumerable<BusinessViewList>> GetViewBusinesList()
+        {
+            using (ABPruebaTecnicaContext db = new ABPruebaTecnicaContext())
+            {
+                return await db.Businesses
+                    .Select(e => new BusinessViewList
+                    {
+                        BusinessId = e.BusinessId,
+                        BusinessName = e.BusinessName
+                    })
+                    .ToListAsync();
+            }
 
+        }
+        
+        
     }
 }

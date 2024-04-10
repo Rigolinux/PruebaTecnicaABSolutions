@@ -1,0 +1,48 @@
+﻿@using Syncfusion.Blazor
+@model UserViewCreation
+@{
+    ViewData["Title"] = "Crear Usuario";
+   
+}
+
+    
+        <div class="text-center">
+            <h1> Crear Usuario</h1>
+         </div>
+            <form  asp-action="Create"  method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <ejs-textbox id="FirstName" placeholder="Nombre" value="FirstName"></ejs-textbox>
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <ejs-textbox id="LastName" placeholder="Apellido" value="LastName"></ejs-textbox>
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <ejs-textbox id="Email" placeholder="Correo" value="Email"></ejs-textbox>
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <ejs-textbox id="Password" placeholder="Contraseña" type="password" value="Password"></ejs-textbox>
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                <ejs-dropdownlist id="BusinessId" dataSource="@Model.businessViews"  placeholder="Seleccione un negocio"  >
+                    <e-dropdownlist-fields text="BusinessName" value="BusinessId"></e-dropdownlist-fields>
+                </ejs-dropdownlist>
+                </div>
+                <div class="form-group">
+                        <button type="submit" class="btn btn-primary">Create</button>
+                </div>
+            </form>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+
+
