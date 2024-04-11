@@ -13,7 +13,9 @@ namespace PruebaTecnicaABSolutions.Services
     public interface IUserServices
     {
         Task CreateUser(UserViewCreation user);
+        Task<bool> DeleteUser(int id);
         Task<User?> FindUser(string mail);
+        Task<User?> FindUserbyId(int id);
         Task<IEnumerable<UserTypesViewList>> GetALlListUserTypes();
         Task<IEnumerable<UserViewModel>> GetAllUsers();
         Task<IEnumerable<UserViewModel>> GetAllUsers(int businessId);
@@ -127,6 +129,13 @@ namespace PruebaTecnicaABSolutions.Services
             }
         }
 
+        public async Task<User?> FindUserbyId(int id)
+        {
+            using (ABPruebaTecnicaContext db = new ABPruebaTecnicaContext())
+            {
+                return await db.Users.FirstOrDefaultAsync(u => u.UserId == id);
+            }
+        }
         public async Task<IEnumerable<UserTypesViewList>> GetALlListUserTypes()
         {
             
@@ -157,5 +166,19 @@ namespace PruebaTecnicaABSolutions.Services
 
         }
 
+        public async Task<bool> DeleteUser(int id)
+        {
+            using (ABPruebaTecnicaContext db = new ABPruebaTecnicaContext())
+            {
+                User user = await db.Users.FirstOrDefaultAsync(u => u.UserId == id);
+                if (user == null)
+                {
+                    return false;
+                }
+                db.Users.Remove(user);
+                await db.SaveChangesAsync();
+                return true;
+            }
+        }
     }
 }

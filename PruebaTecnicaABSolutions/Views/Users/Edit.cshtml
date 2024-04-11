@@ -1,0 +1,69 @@
+﻿@using Syncfusion.Blazor
+@model UserViewUpdate
+@{
+
+    ViewData["Title"] = "Actualizar Usuario";
+
+    
+}
+
+   <div class="container">
+        <div class="text-right">
+            <h1> Actualizar Usuario</h1>
+         </div>
+            <form  asp-action="Create"  method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group mt-3">
+                    <ejs-textbox id="FirstName" placeholder="Nombre" value="@Model.FirstName"  floatLabelType="Always"></ejs-textbox>
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                </div>
+                <div class="form-group mt-3">
+            <ejs-textbox id="LastName" placeholder="Apellido" value="@Model.LastName" floatLabelType="Always"></ejs-textbox>
+                                <span asp-validation-for="LastName" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mt-3">
+            <ejs-textbox id="Email" placeholder="Correo" value="@Model.Email" floatLabelType="Always"></ejs-textbox>
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="form-group mt-3">
+                    <span>Para cambiar contraseña escriba un valor </span>
+                    <ejs-textbox id="Password"  placeholder="Contraseña" type="password"  floatLabelType="Always"></ejs-textbox>
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+ 
+              
+
+                <div class="form-group mt-3">
+                    @if (Model.businessViews != null && Model.businessViews.Any())
+                    {
+                <ejs-dropdownlist id="BusinessId" value="@Model.BusinessId" dataSource="@Model.businessViews" placeholder="Seleccione un negocio">
+                            <e-dropdownlist-fields text="BusinessName" value="BusinessId"></e-dropdownlist-fields>
+                        </ejs-dropdownlist>
+                    }
+                </div>
+                <div class="form-group mt-3">
+
+                    @if (Model.userTypes != null && Model.userTypes.Any())
+                    {
+                <ejs-dropdownlist id="UserType" value="@Model.UserType" dataSource="@Model.userTypes" placeholder="Seleccione un rol">
+                            <e-dropdownlist-fields text="TypeName" value="UserTypeId"></e-dropdownlist-fields>
+                        </ejs-dropdownlist>
+
+                    }
+                </div>
+                <div class="form-group mt-3 d-flex justify-content-between">
+                        <a asp-action="Index" class="btn btn-secondary">Voler a la lista</a>
+                        <button type="submit" class="btn btn-primary">Crear</button>
+                </div>
+            </form>
+</div>
+
+@section Scripts {
+    <script>
+        
+    </script>
+}
+
+
+

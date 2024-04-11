@@ -100,17 +100,56 @@ namespace PruebaTecnicaABSolutions.Controllers
 
 
         [Authorize(Roles = "1,2")]
-        public  IActionResult  Edit(int id = 0)
+        public async Task<IActionResult> Edit(int id = 0)
         {
             var UserId = id;
+            var data = HttpContext.User.Claims.ToList();
+            var role = data[2].Value;
+            var businees = data[3].Value;
+
             if (UserId == 0)
             {
                 return RedirectToAction("Index");
             }
+            var dbUser = await userServices.FindUserbyId(id);
+            UserViewUpdate user = new UserViewUpdate()
+            {
+                FirstName = dbUser.FirstName,
+                LastName = dbUser.LastName,
+                BusinessId = dbUser.BusinessId,
+                Email = dbUser.Email,
+                UserId = dbUser.UserId,
+                UserType = dbUser.UserTypeId
+            };
+            if (role == "1")
+            {
+                user.businessViews = await userServices.GetViewBusinesList();
+                user.userTypes = await userServices.GetALlListUserTypes();
+            }
+            if (role == "2")
+            {
+                user.userTypes = await userServices.GetListUserTypes();
+            }
 
-
-
-            return RedirectToAction("Index", "Home");
+            return View(user);
         }
+
+        [HttpDelete]
+        public async Task<IActionResult> Delete(int id)
+        {
+            
+            bool isDeleted = await userServices.DeleteUser(id);
+            if (isDeleted)
+            {
+                return Ok();
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+        
+   
     }
 }
