@@ -17,16 +17,27 @@
     <title>Login</title>
 </head>
 <body>
+    <div class="container"> 
+
       <form asp-controller="Access" asp-action="Login" method="post">
             <h1>Login</h1>
-        <ejs-textbox type="email" placeholder="Email" id="Email" value="Email"></ejs-textbox>
-        <ejs-textbox type="password" placeholder="Contraseña" value="Password" id="Password"> </ejs-textbox>
+            <div class="form-group mt-3">
+               <ejs-textbox type="email" placeholder="Email" id="Email" value="correo2@gmail.com"></ejs-textbox>    
+            </div>
+            <div class="form-group mt-3">
+               <ejs-textbox type="password" placeholder="Contraseña" value="1234" id="Password"> </ejs-textbox>
+            </div>
 
-            <label>
-            <input type="checkbox" asp-for="KeepLogin" />
-            Keep me logged In.
-            </label>
-            <button type="submit">Login</button>
+            <div class="form-group mt-3 d-flex justify-content-between">
+                <div>
+                    <input type="checkbox" asp-for="KeepLogin" />
+                    <span>
+                        Mantener Sesión
+                    </span>
+                </div>
+
+            <button class="btn btn-primary" type="submit">Login</button>
+            </div>
 
             @if (ViewData["ValidateMessage"] != null)
             {
@@ -35,6 +46,7 @@
                 <label>@ViewData</label>
             }
     </form>
+    </div>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
