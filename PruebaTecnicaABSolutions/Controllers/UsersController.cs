@@ -133,6 +133,18 @@ namespace PruebaTecnicaABSolutions.Controllers
 
             return View(user);
         }
+        [Authorize(Roles = "1,2")]
+        [HttpPost]
+        public async Task<IActionResult> Edit(UserViewUpdate user)
+        {
+            bool isUpdated =  await userServices.UpdateUser(user);
+            if (isUpdated)
+            {
+                return RedirectToAction("Index");
+            }
+            return RedirectToAction("Edit", new { id = user.UserId });
+        }
+       
 
         [HttpDelete]
         public async Task<IActionResult> Delete(int id)

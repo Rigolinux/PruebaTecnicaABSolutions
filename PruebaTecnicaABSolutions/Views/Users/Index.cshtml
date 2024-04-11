@@ -19,10 +19,11 @@
         
     </div>
     
-    <ejs-grid id="Grid" dataSource="@Model" allowFiltering="true" gridLines="None" allowSearching="true">
+    <ejs-grid id="Grid" dataSource="@Model" toolbar="@(new List<string>() {"Search" })" allowFiltering="true" gridLines="None" >
       
+    
         <e-grid-columns>
-            <e-grid-column headerText="Id" field="UserId"></e-grid-column>
+            <e-grid-column headerText="Id" field="UserId"  ></e-grid-column>
             <e-grid-column headerText="Nombre" field="FirstName"> </e-grid-column>
             <e-grid-column headerText="Apellido" field="LastName"></e-grid-column>
             <e-grid-column headerText="Correo" field="Email"></e-grid-column>
@@ -30,7 +31,6 @@
             <e-grid-column headerText="Negocio" field="Business"></e-grid-column>
             <e-grid-column headerText="Acciones" template="#actionColTemplate" ></e-grid-column> 
         </e-grid-columns>
-          
     </ejs-grid>
 
         </div>

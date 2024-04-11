@@ -21,6 +21,7 @@ namespace PruebaTecnicaABSolutions.Services
         Task<IEnumerable<UserViewModel>> GetAllUsers(int businessId);
         Task<IEnumerable<UserTypesViewList>> GetListUserTypes();
         Task<IEnumerable<BusinessViewList>> GetViewBusinesList();
+        Task<bool> UpdateUser(UserViewUpdate user);
     }
    
 
@@ -165,6 +166,30 @@ namespace PruebaTecnicaABSolutions.Services
             }
 
         }
+
+        public async Task<bool> UpdateUser(UserViewUpdate user)
+        {
+            using (ABPruebaTecnicaContext db = new ABPruebaTecnicaContext())
+            {
+                User userToUpdate = await db.Users.FirstOrDefaultAsync(u => u.UserId == user.UserId);
+                if (userToUpdate == null)
+                {
+                    return false;
+                }
+                if (user.Password != null)
+                {
+                    userToUpdate.Password = encriptService.Encrypt(user.Password);
+                }
+                userToUpdate.FirstName = user.FirstName;
+                userToUpdate.LastName = user.LastName;
+                userToUpdate.Email = user.Email;
+                userToUpdate.BusinessId = user.BusinessId;
+                userToUpdate.UserTypeId = user.UserType;
+                await db.SaveChangesAsync();
+                return true;
+            }
+        }
+
 
         public async Task<bool> DeleteUser(int id)
         {
