@@ -1,0 +1,83 @@
+﻿@model IEnumerable<MenuItemView>
+
+@{
+    ViewData["Title"] = "Lista de Items";
+}
+
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+<ejs-grid id="Grid" dataSource="@Model" toolbar="@(new List<string>() {"Search" })" gridLines="None">
+    <e-grid-columns>
+        <e-grid-column headerText="Id" field="ItemId"></e-grid-column>
+        <e-grid-column headerText="Nombre del Ítem" field="ItemName"> </e-grid-column>
+    
+        <e-grid-column headerText="Categoría" field="CategoryName"></e-grid-column>
+        <e-grid-column headerText="Precio" field="Price"></e-grid-column>
+          @if (Model.Any(m => m.BusinessName != null && m.BusinessName.Any()))
+            {
+               <e-grid-column headerText="Negocio" field="BusinessName"></e-grid-column>
+            }
+        <e-grid-column headerText="Fecha de Agregado" field="AddedDate" format="dd/MM/yyyy"></e-grid-column>
+        <e-grid-column headerText="Acciones" template="#actionColTemplate"></e-grid-column>
+    </e-grid-columns>
+</ejs-grid>
+
+
+<script id="actionColTemplate" type="text/x-template">
+        <div class="d-flex flex-row justify-content-evenly">
+       <a class="btn btn-sm btn-primary " href="/MenuItems/Edit/${ItemId}" >
+                <i class="fa-solid fa-pen  fa-lg"></i>
+            </a>
+     <a class="btn btn-sm btn-info " href="/MenuItems/Details/${ItemId}" >
+            <i class="fa-solid fa-eye  fa-lg"></i>
+        </a>
+           <a class="btn btn-danger ml-2" onclick="ConfirmarEliminacion(${ItemId})">
+               <i class="fa-solid fa-trash fa-lg"></i>
+            </a>
+        </div>
+</script>
+
+@section Scripts {
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+}
+<script>
+    function ConfirmarEliminacion(url) {
+
+        Swal.fire({
+            title: '¿Estás seguro?',
+            text: "Ademas de Borrar la categoria, borraras todos los elementos asociados ",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#808080',
+            confirmButtonText: '¡Sí, bórralo!',
+            cancelButtonText: 'Cancelar'
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+                    const urlst = `/Users/Delete/${url}`
+                    fetch(urlst, {
+                        method: 'DELETE'
+                    })
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error('La petición no fue exitosa');
+                            }
+                            Swal.fire("Se ha Borrado el Menu Con exito")
+                                .then(() => {
+
+                                    window.location.reload();
+                                });
+                        })
+                        .catch(error => {
+                            console.error('Error al eliminar el Menu:', error);
+                        });
+
+
+                }
+            });
+    }
+</script>

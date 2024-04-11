@@ -147,6 +147,7 @@ namespace PruebaTecnicaABSolutions.Controllers
        
 
         [HttpDelete]
+           [Authorize(Roles = "1,2")]
         public async Task<IActionResult> Delete(int id)
         {
             
