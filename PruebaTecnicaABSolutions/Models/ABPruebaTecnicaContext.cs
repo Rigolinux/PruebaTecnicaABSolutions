@@ -28,8 +28,7 @@ namespace PruebaTecnicaABSolutions.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-
-                optionsBuilder.UseSqlServer("Server=.\\RIGO;Database=ABPruebaTecnica;encrypt=True;Trusted_Connection=True;TrustServerCertificate=True;");
+               optionsBuilder.UseSqlServer("Server=.\\RIGO;Database=ABPruebaTecnica;encrypt=True;Trusted_Connection=True;TrustServerCertificate=True;");
             }
         }
 
@@ -51,15 +50,20 @@ namespace PruebaTecnicaABSolutions.Models
             modelBuilder.Entity<MenuCategory>(entity =>
             {
                 entity.HasKey(e => e.CategoryId)
-                    .HasName("PK__MenuCate__19093A0B6AE92DBB");
+                    .HasName("PK__MenuCate__19093A0BD6EA2008");
 
                 entity.Property(e => e.CategoryName).HasMaxLength(50);
+
+                entity.HasOne(d => d.Business)
+                    .WithMany(p => p.MenuCategories)
+                    .HasForeignKey(d => d.BusinessId)
+                    .HasConstraintName("FK__MenuCateg__Busin__412EB0B6");
             });
 
             modelBuilder.Entity<MenuItem>(entity =>
             {
                 entity.HasKey(e => e.ItemId)
-                    .HasName("PK__MenuItem__727E838B1FC4CE4D");
+                    .HasName("PK__MenuItem__727E838B0F6AACD8");
 
                 entity.Property(e => e.AddedDate)
                     .HasColumnType("datetime")
@@ -72,12 +76,12 @@ namespace PruebaTecnicaABSolutions.Models
                 entity.HasOne(d => d.Business)
                     .WithMany(p => p.MenuItems)
                     .HasForeignKey(d => d.BusinessId)
-                    .HasConstraintName("FK__MenuItems__Busin__3B75D760");
+                    .HasConstraintName("FK__MenuItems__Busin__45F365D3");
 
                 entity.HasOne(d => d.Category)
                     .WithMany(p => p.MenuItems)
                     .HasForeignKey(d => d.CategoryId)
-                    .HasConstraintName("FK__MenuItems__Categ__3A81B327");
+                    .HasConstraintName("FK__MenuItems__Categ__44FF419A");
             });
 
             modelBuilder.Entity<Role>(entity =>

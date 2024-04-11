@@ -116,10 +116,10 @@ namespace PruebaTecnicaABSolutions.Controllers
             {
                 FirstName = dbUser.FirstName,
                 LastName = dbUser.LastName,
-                BusinessId = dbUser.BusinessId,
+                BusinessId = (int)dbUser.BusinessId,
                 Email = dbUser.Email,
                 UserId = dbUser.UserId,
-                UserType = dbUser.UserTypeId
+                UserType = (int)dbUser.UserTypeId
             };
             if (role == "1")
             {

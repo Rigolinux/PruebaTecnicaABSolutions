@@ -12,7 +12,9 @@ namespace PruebaTecnicaABSolutions.Models
 
         public int CategoryId { get; set; }
         public string? CategoryName { get; set; }
+        public int? BusinessId { get; set; }
 
+        public virtual Business? Business { get; set; }
         public virtual ICollection<MenuItem> MenuItems { get; set; }
     }
 }

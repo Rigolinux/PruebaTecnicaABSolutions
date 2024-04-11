@@ -7,6 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddTransient<IUserServices,UserServices>();
 builder.Services.AddTransient<IEncriptService,EncriptService>();
+builder.Services.AddTransient<IMenuCategoriesService, MenuCategoriesService>();
 
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();

@@ -7,18 +7,20 @@ namespace PruebaTecnicaABSolutions.Models
     {
         public Business()
         {
+            MenuCategories = new HashSet<MenuCategory>();
             MenuItems = new HashSet<MenuItem>();
             Users = new HashSet<User>();
         }
 
         public int BusinessId { get; set; }
-        public string BusinessName { get; set; }
+        public string? BusinessName { get; set; }
         public string? Description { get; set; }
         public DateTime? CreationDate { get; set; }
         public string? Address { get; set; }
         public string? Email { get; set; }
         public string? Phone { get; set; }
 
+        public virtual ICollection<MenuCategory> MenuCategories { get; set; }
         public virtual ICollection<MenuItem> MenuItems { get; set; }
         public virtual ICollection<User> Users { get; set; }
     }
