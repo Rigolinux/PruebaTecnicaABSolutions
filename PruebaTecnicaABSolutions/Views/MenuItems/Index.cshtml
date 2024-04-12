@@ -6,7 +6,12 @@
 
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <div class="d-flex justify-content-end ">
+        <a class="btn btn-primary" asp-action="Create">Agregar Item</a>
+
+       
+
+    </div>
 </p>
 
 <ejs-grid id="Grid" dataSource="@Model" toolbar="@(new List<string>() {"Search" })" gridLines="None">
@@ -48,7 +53,7 @@
 
         Swal.fire({
             title: '¿Estás seguro?',
-            text: "Ademas de Borrar la categoria, borraras todos los elementos asociados ",
+            text: "Se eliminara el Item, esta accion no se puede deshacer?",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#d33',
@@ -58,7 +63,7 @@
         })
             .then((willDelete) => {
                 if (willDelete) {
-                    const urlst = `/Users/Delete/${url}`
+                    const urlst = `/MenuItems/Delete/${url}`
                     fetch(urlst, {
                         method: 'DELETE'
                     })

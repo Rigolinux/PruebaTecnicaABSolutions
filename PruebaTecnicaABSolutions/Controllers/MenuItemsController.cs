@@ -145,7 +145,30 @@ namespace PruebaTecnicaABSolutions.Controllers
             
         }
 
-        public async Task<IEnumerable<MenuCategoryViewList?>> GeListMenucategory(int id) {
+        public async Task<IEnumerable<MenuCategoryViewList?>> GetListMenucategory(int id) {
+            var data = HttpContext.User.Claims.ToList();
+            var role = data[2].Value;
+            var businees = data[3].Value;
+            if (!int.TryParse(businees, out int id_B)) { }
+            IEnumerable<MenuCategoryViewList?> menuCategories;
+
+            if (role == "1")
+            {
+                menuCategories = await menuItemsService.MenuCategoryViewList(id);
+
+            }
+            else
+            {
+                menuCategories = await menuItemsService.MenuCategoryViewList(id_B);
+
+            }
+
+            return menuCategories;
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> Delete(int id)
+        {
             var data = HttpContext.User.Claims.ToList();
             var role = data[2].Value;
             var businees = data[3].Value;
@@ -153,15 +176,60 @@ namespace PruebaTecnicaABSolutions.Controllers
 
             if (role == "1")
             {
-                return await menuItemsService.MenuCategoryViewList(id);
+                bool IsDeleted = await menuItemsService.DeleteMenuItemById(id);
+                if(IsDeleted)
+                return Ok();
+
+                return BadRequest();
 
             }
-            else
-            {
-                return await menuItemsService.MenuCategoryViewList(id_B);
 
-            }
+            bool IsDeletedBu = await menuItemsService.DeleteMenuItemByidandBussines(id, id_B);
+            if(IsDeletedBu)
+            return Ok();
+
+            return BadRequest();
         }
+
+        public async Task<IActionResult> Create()
+        {
+            var data = HttpContext.User.Claims.ToList();
+            var role = data[2].Value;
+            var businees = data[3].Value;
+            if (!int.TryParse(businees, out int id_B)) { }
+
+            MenuItemViewCreation newMenuCategory = new MenuItemViewCreation()
+            {
+                BusinessId = id_B,
+
+            };
+            
+
+            if (role == "1")
+            {
+                newMenuCategory.businessViews = await userServices.GetViewBusinesList();
+                newMenuCategory.menuCategoryViews = await menuItemsService.MenuCategoryViewList(id_B);
+                
+
+            }
+
+            return View(newMenuCategory);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(MenuItemViewCreation menuItemView) 
+        {
+            var data = HttpContext.User.Claims.ToList();
+            var role = data[2].Value;
+            var businees = data[3].Value;
+            if (!int.TryParse(businees, out int id_B)) { }
+            menuItemView.BusinessId = id_B;
+            await menuItemsService.CreateMenuItem(menuItemView);
+
+            return RedirectToAction("Index");
+
+        }
+
             //    ViewData["BusinessId"] = new SelectList(_context.Businesses, "BusinessId", "BusinessId");
             //    ViewData["CategoryId"] = new SelectList(_context.MenuCategories, "CategoryId", "CategoryId");
             //    return View();

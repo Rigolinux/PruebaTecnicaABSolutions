@@ -6,6 +6,9 @@ namespace PruebaTecnicaABSolutions.Services
 {
     public interface IMenuItemsService
     {
+        Task CreateMenuItem(MenuItemViewCreation item);
+        Task<bool> DeleteMenuItemById(int id);
+        Task<bool> DeleteMenuItemByidandBussines(int id, int bussinesid);
         Task<IEnumerable<MenuItemView>> FindAllMenuItems();
         Task<IEnumerable<MenuItemView>> FindAllMenuItemsByBusiness(int idBussiness);
         Task<MenuItemView?> FindOneItemByid(int id);
@@ -191,5 +194,68 @@ namespace PruebaTecnicaABSolutions.Services
                 }
             }
         }
+
+
+        public async Task<bool> DeleteMenuItemById(int id)
+        {
+            using (ABPruebaTecnicaContext db = new ABPruebaTecnicaContext())
+            {
+                var menuItem = await db.MenuItems.FirstOrDefaultAsync(e => e.ItemId == id );
+
+                if (menuItem != null)
+                {
+                    // Eliminar el objeto
+                    db.MenuItems.Remove(menuItem);
+
+                    // Guardar los cambios
+                    await db.SaveChangesAsync();
+                    return true;
+                }
+
+                return false;
+
+
+            }
+        }
+
+        public async Task<bool> DeleteMenuItemByidandBussines(int id, int bussinesid)
+        {
+            using (ABPruebaTecnicaContext db = new ABPruebaTecnicaContext())
+            {
+
+                var menuItem = await db.MenuItems.FirstOrDefaultAsync(e => e.ItemId == id && e.BusinessId == bussinesid);
+
+                if (menuItem != null)
+                {
+                    // Eliminar el objeto
+                    db.MenuItems.Remove(menuItem);
+
+                    // Guardar los cambios
+                    await db.SaveChangesAsync();
+                    return true;
+                }
+
+                return false;
+            }
+        }
+
+        public async Task CreateMenuItem(MenuItemViewCreation item)
+        {
+            using (ABPruebaTecnicaContext db = new ABPruebaTecnicaContext())
+            {
+                MenuItem menuItem = new MenuItem()
+                {
+                    ItemName = item.ItemName,
+                    Price = item.Price,
+                    Description = item.Description,
+                    BusinessId = item.BusinessId,
+                    CategoryId = item.CategoryId,
+                };
+
+                db.MenuItems.Add(menuItem);
+                await db.SaveChangesAsync();
+            }
+        }
+
     }
 }

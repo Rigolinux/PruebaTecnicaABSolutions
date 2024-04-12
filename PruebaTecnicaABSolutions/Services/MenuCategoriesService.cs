@@ -7,6 +7,7 @@ namespace PruebaTecnicaABSolutions.Services
     public interface IMenuCategoriesService
     {
         Task<bool> CreateMenuCategory(MenuCategoryViewCreation menuCategory);
+        Task DeleteMenuCategory(int id);
         Task<IEnumerable<MenuCategory>> FindAllMenuCategory();
         Task<IEnumerable<MenuCategory>> FindAllMenuCategoryByBusiness(int idBussiness);
         Task<MenuCategory?> FindOneCategory(int id, int idBussiness);
@@ -82,5 +83,23 @@ namespace PruebaTecnicaABSolutions.Services
 
         }
         
+        public async Task DeleteMenuCategory(int id)
+        {
+            using (ABPruebaTecnicaContext db = new ABPruebaTecnicaContext())
+            {
+               
+                var categoria = await db.MenuCategories.FirstOrDefaultAsync(c => c.CategoryId == id);
+
+                if (categoria != null)
+                {
+                   
+                     db.MenuCategories.Remove(categoria);
+
+                    
+                    await db.SaveChangesAsync();
+                }
+            }
+
+        }
     }
 }

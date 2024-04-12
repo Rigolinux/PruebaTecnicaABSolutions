@@ -146,6 +146,15 @@ namespace PruebaTecnicaABSolutions.Controllers
             return RedirectToAction("Index");
         }
 
-    
+        [HttpDelete]
+        public async Task<IActionResult> Delete(int id)
+        {
+
+            await menuCategoriesService.DeleteMenuCategory(id);
+
+            return Ok();
+
+        }
+
     }
 }
