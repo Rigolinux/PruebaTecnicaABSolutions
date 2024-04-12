@@ -22,7 +22,7 @@ namespace PruebaTecnicaABSolutions.Controllers
             this.businessService = businessService;
         }
 
-        [Authorize(Roles ="1")]
+        [Authorize(Roles ="1,2")]
         // GET: Businesses
         public async Task<IActionResult> Index()
         {
@@ -36,7 +36,7 @@ namespace PruebaTecnicaABSolutions.Controllers
                 return View(business);
             }
 
-            return RedirectToAction("Detail");
+            return RedirectToAction("Details");
             
             
         }

@@ -39,14 +39,7 @@
  
               
 
-                <div class="form-group mt-3">
-                    @if (Model.businessViews != null && Model.businessViews.Any())
-                    {
-                <ejs-dropdownlist id="BusinessId" value="@Model.BusinessId" dataSource="@Model.businessViews" placeholder="Seleccione un negocio">
-                            <e-dropdownlist-fields text="BusinessName" value="BusinessId"></e-dropdownlist-fields>
-                        </ejs-dropdownlist>
-                    }
-                </div>
+                
                 <div class="form-group mt-3">
 
                     @if (Model.userTypes != null && Model.userTypes.Any())
