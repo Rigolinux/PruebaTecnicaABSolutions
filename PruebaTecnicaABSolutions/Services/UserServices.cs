@@ -82,8 +82,7 @@ namespace PruebaTecnicaABSolutions.Services
                                 UserId = joined.User.UserId,
                                 UserType = userType.TypeName
                             })
-                    .Where(e => e.BusinessId == businessId
-                    )
+                    .Where(e => e.BusinessId == businessId && e.UserTypeId != 1)
                     .ToListAsync();
             }
         }

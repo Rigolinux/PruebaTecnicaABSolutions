@@ -9,6 +9,7 @@ builder.Services.AddTransient<IUserServices,UserServices>();
 builder.Services.AddTransient<IEncriptService,EncriptService>();
 builder.Services.AddTransient<IMenuCategoriesService, MenuCategoriesService>();
 builder.Services.AddTransient<IMenuItemsService, MenuItemsService>();
+builder.Services.AddTransient<IBusinessService, BusinessService>();
 
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();

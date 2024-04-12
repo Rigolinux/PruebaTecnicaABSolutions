@@ -36,7 +36,7 @@ namespace PruebaTecnicaABSolutions.Controllers
             {
                 var items = await menuItemsService.FindAllMenuItems();
                 return View(items);
-                
+
 
 
             }
@@ -61,7 +61,7 @@ namespace PruebaTecnicaABSolutions.Controllers
                 {
                     return RedirectToAction("Index");
                 }
-                
+
                 return View(item);
             }
             var itemB = await menuItemsService.FindOneItemByidandBussines(id, id_B);
@@ -69,9 +69,9 @@ namespace PruebaTecnicaABSolutions.Controllers
             {
                 return RedirectToAction("Index");
             }
-            
+
             return View(itemB);
-            
+
         }
 
         public async Task<IActionResult> Edit(int id)
@@ -83,17 +83,18 @@ namespace PruebaTecnicaABSolutions.Controllers
 
             if (role == "1")
             {
-                
+
                 var item = await menuItemsService.FindOneItemByid(id);
-               // var bussnessList = await userServices.GetViewBusinesList();
+                // var bussnessList = await userServices.GetViewBusinesList();
 
                 if (item == null)
                 {
                     return RedirectToAction("Index");
                 }
-               var categoryList = await menuItemsService.MenuCategoryViewList(item.BusinessId);
+                var categoryList = await menuItemsService.MenuCategoryViewList(item.BusinessId);
 
-                MenuItemViewUpdate menuCreationUpdate = new MenuItemViewUpdate() {
+                MenuItemViewUpdate menuCreationUpdate = new MenuItemViewUpdate()
+                {
                     ItemId = item.ItemId,
                     ItemName = item.ItemName,
                     Description = item.Description,
@@ -101,11 +102,11 @@ namespace PruebaTecnicaABSolutions.Controllers
                     BusinessId = item.BusinessId,
                     CategoryId = item.CategoryId,
                     menuCategoryViews = categoryList
-                }; 
+                };
                 return View(menuCreationUpdate);
             }
             var itemB = await menuItemsService.FindOneItemByidandBussines(id, id_B);
-       
+
             if (itemB == null)
             {
                 return RedirectToAction("Index");
@@ -124,7 +125,7 @@ namespace PruebaTecnicaABSolutions.Controllers
             return View(menuItemView);
 
         }
-        
+
         [HttpPost]
         public async Task<IActionResult> Edit(MenuItemViewUpdate itemViewUpdate)
         {
@@ -133,19 +134,20 @@ namespace PruebaTecnicaABSolutions.Controllers
             var businees = data[3].Value;
             if (!int.TryParse(businees, out int id_B)) { }
 
-            if(role != "1")
+            if (role != "1")
             {
-                if(id_B != itemViewUpdate.BusinessId)
+                if (id_B != itemViewUpdate.BusinessId)
                 {
                     return RedirectToAction("Index");
                 }
             }
             await menuItemsService.UpdateMenuItem(itemViewUpdate);
             return RedirectToAction("Index");
-            
+
         }
 
-        public async Task<IEnumerable<MenuCategoryViewList?>> GetListMenucategory(int id) {
+        public async Task<IEnumerable<MenuCategoryViewList?>> GetListMenucategory(int id)
+        {
             var data = HttpContext.User.Claims.ToList();
             var role = data[2].Value;
             var businees = data[3].Value;
@@ -177,16 +179,16 @@ namespace PruebaTecnicaABSolutions.Controllers
             if (role == "1")
             {
                 bool IsDeleted = await menuItemsService.DeleteMenuItemById(id);
-                if(IsDeleted)
-                return Ok();
+                if (IsDeleted)
+                    return Ok();
 
                 return BadRequest();
 
             }
 
             bool IsDeletedBu = await menuItemsService.DeleteMenuItemByidandBussines(id, id_B);
-            if(IsDeletedBu)
-            return Ok();
+            if (IsDeletedBu)
+                return Ok();
 
             return BadRequest();
         }
@@ -203,13 +205,13 @@ namespace PruebaTecnicaABSolutions.Controllers
                 BusinessId = id_B,
 
             };
-            
+
 
             if (role == "1")
             {
                 newMenuCategory.businessViews = await userServices.GetViewBusinesList();
                 newMenuCategory.menuCategoryViews = await menuItemsService.MenuCategoryViewList(id_B);
-                
+
 
             }
 
@@ -217,7 +219,7 @@ namespace PruebaTecnicaABSolutions.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(MenuItemViewCreation menuItemView) 
+        public async Task<IActionResult> Create(MenuItemViewCreation menuItemView)
         {
             var data = HttpContext.User.Claims.ToList();
             var role = data[2].Value;
@@ -230,126 +232,5 @@ namespace PruebaTecnicaABSolutions.Controllers
 
         }
 
-            //    ViewData["BusinessId"] = new SelectList(_context.Businesses, "BusinessId", "BusinessId");
-            //    ViewData["CategoryId"] = new SelectList(_context.MenuCategories, "CategoryId", "CategoryId");
-            //    return View();
-            //}
-
-            //// POST: MenuItems/Create
-            //// To protect from overposting attacks, enable the specific properties you want to bind to.
-            //// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-            //[HttpPost]
-            //[ValidateAntiForgeryToken]
-            //public async Task<IActionResult> Create([Bind("ItemId,ItemName,Description,CategoryId,Price,BusinessId,AddedDate")] MenuItem menuItem)
-            //{
-            //    if (ModelState.IsValid)
-            //    {
-            //        _context.Add(menuItem);
-            //        await _context.SaveChangesAsync();
-            //        return RedirectToAction(nameof(Index));
-            //    }
-            //    ViewData["BusinessId"] = new SelectList(_context.Businesses, "BusinessId", "BusinessId", menuItem.BusinessId);
-            //    ViewData["CategoryId"] = new SelectList(_context.MenuCategories, "CategoryId", "CategoryId", menuItem.CategoryId);
-            //    return View(menuItem);
-            //}
-
-            //// GET: MenuItems/Edit/5
-            //public async Task<IActionResult> Edit(int? id)
-            //{
-            //    if (id == null || _context.MenuItems == null)
-            //    {
-            //        return NotFound();
-            //    }
-
-            //    var menuItem = await _context.MenuItems.FindAsync(id);
-            //    if (menuItem == null)
-            //    {
-            //        return NotFound();
-            //    }
-            //    ViewData["BusinessId"] = new SelectList(_context.Businesses, "BusinessId", "BusinessId", menuItem.BusinessId);
-            //    ViewData["CategoryId"] = new SelectList(_context.MenuCategories, "CategoryId", "CategoryId", menuItem.CategoryId);
-            //    return View(menuItem);
-            //}
-
-            //// POST: MenuItems/Edit/5
-            //// To protect from overposting attacks, enable the specific properties you want to bind to.
-            //// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-            //[HttpPost]
-            //[ValidateAntiForgeryToken]
-            //public async Task<IActionResult> Edit(int id, [Bind("ItemId,ItemName,Description,CategoryId,Price,BusinessId,AddedDate")] MenuItem menuItem)
-            //{
-            //    if (id != menuItem.ItemId)
-            //    {
-            //        return NotFound();
-            //    }
-
-            //    if (ModelState.IsValid)
-            //    {
-            //        try
-            //        {
-            //            _context.Update(menuItem);
-            //            await _context.SaveChangesAsync();
-            //        }
-            //        catch (DbUpdateConcurrencyException)
-            //        {
-            //            if (!MenuItemExists(menuItem.ItemId))
-            //            {
-            //                return NotFound();
-            //            }
-            //            else
-            //            {
-            //                throw;
-            //            }
-            //        }
-            //        return RedirectToAction(nameof(Index));
-            //    }
-            //    ViewData["BusinessId"] = new SelectList(_context.Businesses, "BusinessId", "BusinessId", menuItem.BusinessId);
-            //    ViewData["CategoryId"] = new SelectList(_context.MenuCategories, "CategoryId", "CategoryId", menuItem.CategoryId);
-            //    return View(menuItem);
-            //}
-
-            //// GET: MenuItems/Delete/5
-            //public async Task<IActionResult> Delete(int? id)
-            //{
-            //    if (id == null || _context.MenuItems == null)
-            //    {
-            //        return NotFound();
-            //    }
-
-            //    var menuItem = await _context.MenuItems
-            //        .Include(m => m.Business)
-            //        .Include(m => m.Category)
-            //        .FirstOrDefaultAsync(m => m.ItemId == id);
-            //    if (menuItem == null)
-            //    {
-            //        return NotFound();
-            //    }
-
-            //    return View(menuItem);
-            //}
-
-            //// POST: MenuItems/Delete/5
-            //[HttpPost, ActionName("Delete")]
-            //[ValidateAntiForgeryToken]
-            //public async Task<IActionResult> DeleteConfirmed(int id)
-            //{
-            //    if (_context.MenuItems == null)
-            //    {
-            //        return Problem("Entity set 'ABPruebaTecnicaContext.MenuItems'  is null.");
-            //    }
-            //    var menuItem = await _context.MenuItems.FindAsync(id);
-            //    if (menuItem != null)
-            //    {
-            //        _context.MenuItems.Remove(menuItem);
-            //    }
-
-            //    await _context.SaveChangesAsync();
-            //    return RedirectToAction(nameof(Index));
-            //}
-
-            //private bool MenuItemExists(int id)
-            //{
-            //  return (_context.MenuItems?.Any(e => e.ItemId == id)).GetValueOrDefault();
-            //}
-        }
+    }
 }

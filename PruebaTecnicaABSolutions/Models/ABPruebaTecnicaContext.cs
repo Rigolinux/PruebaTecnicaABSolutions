@@ -19,16 +19,14 @@ namespace PruebaTecnicaABSolutions.Models
         public virtual DbSet<Business> Businesses { get; set; } = null!;
         public virtual DbSet<MenuCategory> MenuCategories { get; set; } = null!;
         public virtual DbSet<MenuItem> MenuItems { get; set; } = null!;
-        public virtual DbSet<Role> Roles { get; set; } = null!;
         public virtual DbSet<User> Users { get; set; } = null!;
-        public virtual DbSet<UserRole> UserRoles { get; set; } = null!;
         public virtual DbSet<UserType> UserTypes { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
-               optionsBuilder.UseSqlServer("Server=.\\RIGO;Database=ABPruebaTecnica;encrypt=True;Trusted_Connection=True;TrustServerCertificate=True;");
+              optionsBuilder.UseSqlServer("Server=.\\RIGO;Database=ABPruebaTecnica;encrypt=True;Trusted_Connection=True;TrustServerCertificate=True;");
             }
         }
 
@@ -84,11 +82,6 @@ namespace PruebaTecnicaABSolutions.Models
                     .HasConstraintName("FK__MenuItems__Categ__44FF419A");
             });
 
-            modelBuilder.Entity<Role>(entity =>
-            {
-                entity.Property(e => e.RoleName).HasMaxLength(50);
-            });
-
             modelBuilder.Entity<User>(entity =>
             {
                 entity.HasIndex(e => e.Email, "UC_Email")
@@ -111,21 +104,6 @@ namespace PruebaTecnicaABSolutions.Models
                     .WithMany(p => p.Users)
                     .HasForeignKey(d => d.UserTypeId)
                     .HasConstraintName("FK__Users__UserTypeI__31EC6D26");
-            });
-
-            modelBuilder.Entity<UserRole>(entity =>
-            {
-                entity.ToTable("UserRole");
-
-                entity.HasOne(d => d.Role)
-                    .WithMany(p => p.UserRoles)
-                    .HasForeignKey(d => d.RoleId)
-                    .HasConstraintName("FK__UserRole__RoleId__35BCFE0A");
-
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.UserRoles)
-                    .HasForeignKey(d => d.UserId)
-                    .HasConstraintName("FK__UserRole__UserId__36B12243");
             });
 
             modelBuilder.Entity<UserType>(entity =>

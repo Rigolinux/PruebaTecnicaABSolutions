@@ -1,0 +1,30 @@
+﻿@model Business
+
+@{
+    ViewData["Title"] = "Editar Negocio";
+}
+
+<h1>Edit</h1>
+
+<h4>Business</h4>
+<hr />
+
+   
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="BusinessId" />
+            
+            <ejs-textbox id="BusinessName" placeholder="Nombre del negocio" value="@Model.BusinessName" floatLabelType="Always"></ejs-textbox>
+            <ejs-textbox id="Description" placeholder="Descripción" value="@Model.Description" floatLabelType="Always"></ejs-textbox>
+            <ejs-textbox id="Address" placeholder="Dirección" value="@Model.Address" floatLabelType="Always"></ejs-textbox>
+            <ejs-textbox id="Email" placeholder="Email" value="@Model.Email" floatLabelType="Always"></ejs-textbox>
+            <ejs-textbox id="Phone" placeholder="Teléfono" value="@Model.Phone" floatLabelType="Always"></ejs-textbox>
+            <div class="form-group mt-3 d-flex justify-content-between">
+                <a asp-action="Index" class="btn btn-secondary">Voler a la lista</a>
+                <button type="submit" class="btn btn-primary">Actualizar </button>
+            </div>
+        </form>
+
+
+
+

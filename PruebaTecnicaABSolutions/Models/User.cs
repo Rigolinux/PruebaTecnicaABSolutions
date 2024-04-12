@@ -5,11 +5,6 @@ namespace PruebaTecnicaABSolutions.Models
 {
     public partial class User
     {
-        public User()
-        {
-            UserRoles = new HashSet<UserRole>();
-        }
-
         public int UserId { get; set; }
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
@@ -20,6 +15,5 @@ namespace PruebaTecnicaABSolutions.Models
 
         public virtual Business? Business { get; set; }
         public virtual UserType? UserType { get; set; }
-        public virtual ICollection<UserRole> UserRoles { get; set; }
     }
 }
