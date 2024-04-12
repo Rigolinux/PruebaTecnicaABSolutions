@@ -10,10 +10,12 @@ builder.Services.AddTransient<IEncriptService,EncriptService>();
 builder.Services.AddTransient<IMenuCategoriesService, MenuCategoriesService>();
 builder.Services.AddTransient<IMenuItemsService, MenuItemsService>();
 builder.Services.AddTransient<IBusinessService, BusinessService>();
-
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddSyncfusionBlazor();
+
+Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("Ngo9BigBOggjHTQxAR8/V1NBaF5cXmZCe0x3R3xbf1x0ZFREal9ZTnRdUj0eQnxTdEFjXX5ccXZWTmJfVEN2Vw==");
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
 .AddCookie(option =>

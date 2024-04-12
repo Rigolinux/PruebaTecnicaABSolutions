@@ -1,4 +1,26 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor HttpContextAccessor;
+
+@{
+    string? connectionId = HttpContextAccessor?.HttpContext?.Connection.Id;
+    var Claims = HttpContextAccessor?.HttpContext?.User.Claims.ToList();
+    string role = "";
+    string businees = "";
+    string businnessesName = "";
+    string roleName = "";
+    if (Claims != null)
+    {
+         role = Claims[2].Value;
+         businees = Claims[3].Value;
+         businnessesName = Claims[4].Value;
+           roleName = Claims[5].Value;
+
+    }
+   
+
+}
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -20,32 +42,50 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">PruebaTecnicaABSolutions</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                <div>Negocio: <b>
+                            @businnessesName
+                </b></div>
+
+                </a>
+
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
+                    <div class="navbar-nav flex-grow-1">
+                        <div class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Inicio</a>
+                        </div>
+                        @if(role == "1" || role == "2")
+                        {
+                        <div class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Businesses" asp-action="Index">Negocio</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Index">Users</a>
-                        </li>
-                        <li class="nav-item">
+                        </div>
+                        <div class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Index">Usuarios</a>
+                        </div>
+                            
+                        }
+                        <div class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="MenuCategories" asp-action="Index">Categorias</a>
-                        </li>
-                        <li class="nav-item">
+                        </div>
+                        <div class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="MenuItems" asp-action="Index">Items</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Access" asp-action="LogOut">Salir</a>
-                        </li>
-                    </ul>
+                        </div>
+                        
+                    </div>
+                    <div class="navbar-collapse collapse d-sm-inline-flex justify-content-end">
+                        <div class="nav-item mx-2 text-center">
+                            <b>
+                                @roleName
+                            </b>
+                        </div>
+                        <div class="nav-item">
+                            <a class="btn btn-danger text-white nav-link text-dark" asp-area="" asp-controller="Access" asp-action="LogOut">Salir</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </nav>

@@ -19,7 +19,13 @@ namespace PruebaTecnicaABSolutions.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            var data = HttpContext.User.Claims.ToList();
+            var role = data[2].Value;
+
+            if (role == "1")
+                return RedirectToAction("Index", "Businesses");
+
+            return RedirectToAction("Index", "MenuItems");
         }
       
         public IActionResult Privacy()

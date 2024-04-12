@@ -12,14 +12,15 @@ namespace PruebaTecnicaABSolutions.Controllers
     {
         private readonly IEncriptService encriptService;
         private readonly IUserServices userServices;
-        
+        private readonly IBusinessService businessService;
 
-        public AccessController(IEncriptService encriptService, IUserServices userServices
+        public AccessController(IEncriptService encriptService, IUserServices userServices, IBusinessService businessService
             
         )
         {
             this.encriptService = encriptService;
             this.userServices = userServices;
+            this.businessService = businessService;
         }
 
         public ActionResult Login()
@@ -38,18 +39,25 @@ namespace PruebaTecnicaABSolutions.Controllers
             if(login.Email != null)
             {
                var user = await this.userServices.FindUser(login.Email);
+                
                 if (user != null && user.Password != null)
                 {
                     bool isValid = this.encriptService.ValidatePassword(login.Password, user.Password);
                     
                     if(isValid )
                     {
+                        if(user.BusinessId != null)
+                            user.Business = await businessService.GetOneBusinesses((int)user.BusinessId);
+                        if (user.UserTypeId != null)
+                            user.UserType = await userServices.GetUserType((int)user.UserTypeId);
                         List<Claim> claims = new List<Claim>()
                         {
                             new Claim(ClaimTypes.Email, user.Email),
                             new Claim(ClaimTypes.Name, user.FirstName),
                             new Claim(ClaimTypes.Role, user.UserTypeId.ToString()),
-                            new Claim("Bussiness", user.BusinessId.ToString())
+                            new Claim("Bussiness", user.BusinessId.ToString()),           
+                            new Claim("BussinessName",user.Business.BusinessName.ToString()),
+                            new Claim("RoleName",user.UserType.TypeName.ToString())
 
                         };
                         // use when the user is 3

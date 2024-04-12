@@ -20,6 +20,7 @@ namespace PruebaTecnicaABSolutions.Services
         Task<IEnumerable<UserViewModel>> GetAllUsers();
         Task<IEnumerable<UserViewModel>> GetAllUsers(int businessId);
         Task<IEnumerable<UserTypesViewList>> GetListUserTypes();
+        Task<UserType?> GetUserType(int id);
         Task<IEnumerable<BusinessViewList>> GetViewBusinesList();
         Task<bool> UpdateUser(UserViewUpdate user);
     }
@@ -189,7 +190,13 @@ namespace PruebaTecnicaABSolutions.Services
             }
         }
 
-
+        public async Task<UserType?> GetUserType(int id)
+        {
+            using (ABPruebaTecnicaContext db = new ABPruebaTecnicaContext())
+            {
+                return await db.UserTypes.FirstOrDefaultAsync(e => e.UserTypeId == id);
+            }
+        }
         public async Task<bool> DeleteUser(int id)
         {
             using (ABPruebaTecnicaContext db = new ABPruebaTecnicaContext())
