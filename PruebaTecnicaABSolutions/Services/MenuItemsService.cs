@@ -14,7 +14,7 @@ namespace PruebaTecnicaABSolutions.Services
         Task<MenuItemView?> FindOneItemByid(int id);
         Task<MenuItemView?> FindOneItemByidandBussines(int id, int idBussiness);
      
-        Task<IEnumerable<MenuCategoryViewList?>> MenuCategoryViewList(int? idBussiness);
+        Task<IEnumerable<MenuCategoryViewList?>> MenuCategoryViewList(int idBussiness);
         Task<bool> UpdateMenuItem(MenuItemViewUpdate item);
     }
     public class MenuItemsService : IMenuItemsService
@@ -150,7 +150,7 @@ namespace PruebaTecnicaABSolutions.Services
             }
         }
 
-        public async Task<IEnumerable<MenuCategoryViewList?>> MenuCategoryViewList(int? idBussiness)
+        public async Task<IEnumerable<MenuCategoryViewList?>> MenuCategoryViewList(int idBussiness)
         {
             using (ABPruebaTecnicaContext db = new ABPruebaTecnicaContext())
             {

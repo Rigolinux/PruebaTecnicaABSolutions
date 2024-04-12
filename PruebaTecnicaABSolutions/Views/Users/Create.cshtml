@@ -5,28 +5,30 @@
    
 }
 
+    <h1>Crear Usuario</h1>
+
+<hr />
+
    <div class="container">
-        <div class="text-center">
-            <h1>Crear Usuario</h1>
-         </div>
+    
             <form  asp-action="Create"  method="post">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group mt-3">
-                    <ejs-textbox id="FirstName" placeholder="Nombre" value="FirstName" floatLabelType="Always"></ejs-textbox>
+                    <ejs-textbox id="FirstName" placeholder="Nombre"  floatLabelType="Always"></ejs-textbox>
                     <span asp-validation-for="FirstName" class="text-danger"></span>
                 </div>
                 <div class="form-group mt-3">
-        <ejs-textbox id="LastName" placeholder="Apellido" value="LastName" floatLabelType="Always"></ejs-textbox>
+        <ejs-textbox id="LastName" placeholder="Apellido" floatLabelType="Always"></ejs-textbox>
                     <span asp-validation-for="LastName" class="text-danger"></span>
                 </div>
 
                 <div class="form-group mt-3">
-        <ejs-textbox id="Email" placeholder="Correo" value="Email" floatLabelType="Always"></ejs-textbox>
+        <ejs-textbox id="Email" placeholder="Correo" floatLabelType="Always"></ejs-textbox>
                     <span asp-validation-for="Email" class="text-danger"></span>
                 </div>
                 
                 <div class="form-group mt-3">
-                    <ejs-textbox id="Password" placeholder="Contraseña" type="password" value="Password" floatLabelType="Always"></ejs-textbox>
+                    <ejs-textbox id="Password" placeholder="Contraseña" type="password"  floatLabelType="Always"></ejs-textbox>
                     <span asp-validation-for="Password" class="text-danger"></span>
                 </div>
                 <div class="form-group mt-3">

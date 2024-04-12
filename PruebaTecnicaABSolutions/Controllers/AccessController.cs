@@ -82,7 +82,7 @@ namespace PruebaTecnicaABSolutions.Controllers
                     }
                 }
             }
-            ViewData["ValidateMessage"] = "usuario no encontrado";
+            ViewData["ValidateMessage"] = "Contraseña o Correo Invalidos Intente de nuevo";
             return View();
         }
 

@@ -4,15 +4,15 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+<h1>Crear Negocio</h1>
 
-<h4>Business</h4>
+
 <hr />
-<div class="row">
-    <div class="col-md-4">
+<div class="container">
+    
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
+            <div class="form-group mt-3">
                 <ejs-textbox id="BusinessName" placeholder="Nombre del negocio" value="@Model.BusinessName" floatLabelType="Always"></ejs-textbox>
                 <span asp-validation-for="BusinessName" class="text-danger"></span>
             </div>
@@ -38,7 +38,7 @@
                 <button type="submit" class="btn btn-primary">Crear </button>
             </div>
         </form>
-    </div>
+    
 </div>
 
 

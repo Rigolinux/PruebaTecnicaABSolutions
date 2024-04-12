@@ -1,13 +1,22 @@
 ﻿@using Syncfusion.Blazor
+@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor HttpContextAccessor;
 
 
 @model List<UserViewModel>
 @{
     ViewData["Title"] = "Users Page";
-   
+    string? connectionId = HttpContextAccessor?.HttpContext?.Connection.Id;
+    var Claims = HttpContextAccessor?.HttpContext?.User.Claims.ToList();
+    string role = "";
+    if (Claims != null)
+    {
+        role = Claims[2].Value;
+    }
 }
 
 
+<h1>Lista Usuarios</h1>
 
 
 <p>
@@ -25,7 +34,10 @@
             <e-grid-column headerText="Apellido" field="LastName"></e-grid-column>
             <e-grid-column headerText="Correo" field="Email"></e-grid-column>
             <e-grid-column headerText="Rol" field="UserType"></e-grid-column>
+        @if (role == "1")
+        {           
             <e-grid-column headerText="Negocio" field="Business"></e-grid-column>
+        }
             <e-grid-column headerText="Acciones" template="#actionColTemplate"></e-grid-column>
         </e-grid-columns>
     </ejs-grid>

@@ -8,8 +8,8 @@
 
 <h4> Editar Item </h4>
 <hr />
-<div class="row">
-    <div class="col-md-4">
+<div class="container">
+  
         <form asp-action="Edit">
             <div class="invisible">
                 <input type="hidden" asp-for="ItemId" />
@@ -23,7 +23,7 @@
                 <ejs-textbox id="Description" placeholder="Descripción" value="@Model.Description" floatLabelType="Always"></ejs-textbox>
              </div>
             <div class="form-group mt-3">
-                <ejs-textbox id="Price" placeholder="Precio" value="@Model.Price" floatLabelType="Always"></ejs-textbox>
+                <ejs-textbox id="Price" Type="number" placeholder="Precio" value="@Model.Price" floatLabelType="Always"></ejs-textbox>
              </div>
             <div class="form-group mt-3">
                 @if (Model.menuCategoryViews != null && Model.menuCategoryViews.Any())
@@ -41,7 +41,7 @@
 
 
         </form>
-    </div>
+   
 </div>
 
 <div>

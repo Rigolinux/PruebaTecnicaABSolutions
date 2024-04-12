@@ -17,7 +17,7 @@ namespace PruebaTecnicaABSolutions.Services
         {
             using (ABPruebaTecnicaContext db = new ABPruebaTecnicaContext())
             {
-                return await db.Businesses.ToListAsync();
+                return await db.Businesses.OrderByDescending(e => e.BusinessId).ToListAsync();
             }
         }
 

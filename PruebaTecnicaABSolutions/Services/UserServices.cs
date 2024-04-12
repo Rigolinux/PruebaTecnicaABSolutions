@@ -58,14 +58,16 @@ namespace PruebaTecnicaABSolutions.Services
                                 UserId = joined.User.UserId,
                                 UserType =userType.TypeName
                             })
+                    .OrderByDescending(e => e.UserId)
                     .ToListAsync();
             }
         }
-        public async Task<IEnumerable<UserViewModel>> GetAllUsers(int businessId)
+        public async Task<IEnumerable<UserViewModel>> GetAllUsers(int idBussines)
         {
             using (ABPruebaTecnicaContext db = new ABPruebaTecnicaContext())
             {
                 return await db.Users
+                     .Where(e => e.BusinessId == idBussines && e.UserTypeId != 1)
                     .Join(db.Businesses,
                             user => user.BusinessId,
                             business => business.BusinessId,
@@ -83,7 +85,7 @@ namespace PruebaTecnicaABSolutions.Services
                                 UserId = joined.User.UserId,
                                 UserType = userType.TypeName
                             })
-                    .Where(e => e.BusinessId == businessId && e.UserTypeId != 1)
+                    .OrderByDescending(e => e.UserId)
                     .ToListAsync();
             }
         }

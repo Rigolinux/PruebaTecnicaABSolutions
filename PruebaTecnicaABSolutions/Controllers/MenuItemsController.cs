@@ -91,7 +91,7 @@ namespace PruebaTecnicaABSolutions.Controllers
                 {
                     return RedirectToAction("Index");
                 }
-                var categoryList = await menuItemsService.MenuCategoryViewList(item.BusinessId);
+                var categoryList = await menuItemsService.MenuCategoryViewList((int)item.BusinessId);
 
                 MenuItemViewUpdate menuCreationUpdate = new MenuItemViewUpdate()
                 {
@@ -207,13 +207,12 @@ namespace PruebaTecnicaABSolutions.Controllers
             };
 
 
-            if (role == "1")
-            {
-                newMenuCategory.businessViews = await userServices.GetViewBusinesList();
+      
+               
                 newMenuCategory.menuCategoryViews = await menuItemsService.MenuCategoryViewList(id_B);
 
 
-            }
+            
 
             return View(newMenuCategory);
         }
@@ -222,7 +221,7 @@ namespace PruebaTecnicaABSolutions.Controllers
         public async Task<IActionResult> Create(MenuItemViewCreation menuItemView)
         {
             var data = HttpContext.User.Claims.ToList();
-            var role = data[2].Value;
+            
             var businees = data[3].Value;
             if (!int.TryParse(businees, out int id_B)) { }
             menuItemView.BusinessId = id_B;
